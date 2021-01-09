@@ -1,0 +1,11 @@
+.movieCard {
+  width: 300px;
+  border: 1px solid lightslategrey;
+  padding: 15px 20px;
+  margin: 10px;
+
+  &__btn {
+    display: flex;
+    justify-content: space-between;
+  }
+}
