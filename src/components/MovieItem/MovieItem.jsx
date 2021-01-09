@@ -31,11 +31,11 @@ class MovieItem extends React.Component {
   render() {
     return (
         <div className={"movieCard"}>
-          <Image src={`https://image.tmdb.org/t/p/w500${this.props.backdrop}`} alt={this.props.title} />
-          <p>{this.props.name}</p>
-          <p>Rank - {this.props.rank}</p>
+          <Image src={`https://image.tmdb.org/t/p/w500${this.props.movie.backdrop_path}`} alt={this.props.movie.title} />
+          <p>{this.props.movie.name}</p>
+          <p>Rank - {this.props.movie.vote_average}</p>
             <div className={"movieCard__btn"}>
-                <button type="button" className={"btn btn-secondary"}
+                <button type="button" className={"btn btn-warning"}
                         onClick={this.ToggleOverviewHandler}>
                     {this.state.show ? "Close overview" : "Open overview"}
                 </button>
@@ -44,8 +44,11 @@ class MovieItem extends React.Component {
                         onClick={this.ToggleLikeHandler}>
                     Like
                 </button>
+                <button type={"button"}
+                        className={"btn btn-danger"}
+                        onClick={this.props.removeMovieHandler.bind(null, this.props.movie)}>Remove</button>
             </div>
-          <p>{this.state.show ? this.props.overview : null}</p>
+          <p>{this.state.show ? this.props.movie.overview : null}</p>
         </div>
     )
   }

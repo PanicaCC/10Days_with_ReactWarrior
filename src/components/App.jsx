@@ -12,19 +12,26 @@ class App extends React.Component {
         }
 
     }
+
+    removeMoviesHandler = movie => {
+        const currentMoviesList = this.state.movies.filter((item) => {
+            return item.id !== movie.id
+        })
+        this.setState({
+            movies: currentMoviesList
+        })
+    }
+
     render() {
         return (
             <div>
                 <div className = {'movieList'}>
-                    {this.state.movies.map((movie, index) => {
+                    {this.state.movies.map((movie) => {
                         return (
                             <MovieItem
-                                key = { index }
-                                name = { movie.original_title }
-                                alt = { movie.title }
-                                overview = { movie.overview }
-                                backdrop = { movie.backdrop_path }
-                                rank = { movie.vote_average }
+                                key = { movie.id }
+                                movie = { movie }
+                                removeMovieHandler = { this.removeMoviesHandler }
                             />
                         )
                     })
