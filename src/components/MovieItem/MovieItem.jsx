@@ -31,8 +31,8 @@ class MovieItem extends React.Component {
   render() {
     return (
         <div className={"movieCard"}>
-          <Image src={`https://image.tmdb.org/t/p/w500${this.props.movie.backdrop_path}`} alt={this.props.movie.title} />
-          <p>{this.props.movie.name}</p>
+          <Image src={`https://image.tmdb.org/t/p/w500${this.props.movie.backdrop_path || this.props.movie.poster_path}`} alt={this.props.movie.title} />
+          <p>{this.props.movie.title}</p>
           <p>Rank - {this.props.movie.vote_average}</p>
             <div className={"movieCard__btn"}>
                 <button type="button" className={"btn btn-warning"}
@@ -46,7 +46,12 @@ class MovieItem extends React.Component {
                 </button>
                 <button type={"button"}
                         className={"btn btn-danger"}
-                        onClick={this.props.removeMovieHandler.bind(null, this.props.movie)}>Remove</button>
+                        onClick={this.props.removeMovieHandler.bind(null, this.props.movie)}>
+                    Remove
+                </button>
+            </div>
+            <div className="">
+                <button type={"button"} onClick={this.props.addWillWatchHandler.bind(null, this.props.movie)}>Will Watch</button>
             </div>
           <p>{this.state.show ? this.props.movie.overview : null}</p>
         </div>

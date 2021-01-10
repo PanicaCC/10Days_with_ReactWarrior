@@ -1,11 +1,9 @@
 .movieCard {
-  width: 400px;
-  border: 1px solid lightslategrey;
-  padding: 15px 20px;
+  width: calc(100% / 3 - 20px);
   margin: 10px;
+  background: #ccc;
+  padding: 5px;
 
   &__btn {
-    display: flex;
-    justify-content: space-between;
   }
 }
