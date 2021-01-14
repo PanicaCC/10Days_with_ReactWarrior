@@ -2,19 +2,50 @@ import React, {Component} from 'react';
 import './Movie.scss'
 import MovieList from "./MovieList/MovieList";
 import WillWatch from "./WillWatch/WillWatch";
-import { moviesData } from "../../moviesData";
+import MovieTab from "./MovieTab/MovieTab";
+import {API_KEY, API_URL} from '../../Utils/api'
 
 //UI = (state, props)
-
 class Movie extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            movies: moviesData,
-            willWatchArr: []
+            isLoaded: false,
+            movies: [],
+            willWatchArr: [],
+            sort: 'popularity.desc'
         }
 
+    }
+
+    componentDidMount() {
+        this.getMovies()
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevState.sort !== this.state.sort){
+            this.getMovies()
+        }
+    }
+
+    getMovies = () => {
+        fetch(`${API_URL}discover/movie?api_key=${API_KEY}&sort_by=${this.state.sort}`)
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    this.setState({
+                        isLoaded: true,
+                        movies: result.results
+                    });
+                },
+                (error) => {
+                    this.setState({
+                        isLoaded: true,
+                        error
+                    });
+                }
+            )
     }
 
     addWillWatchHandler = movie => {
@@ -53,9 +84,31 @@ class Movie extends Component {
         })
     }
 
+    updateSortBy = value => {
+        this.setState({
+            sort: value
+        })
+    }
+
     render() {
+
         return (
             <div className={'Movie'}>
+                <div className="row">
+                    <div className="col-12">
+                        <div className="Movie__header">
+                            <div className="col-9">
+                                <MovieTab
+                                    sort = { this.state.sort }
+                                    updateSortBy = { this.updateSortBy }
+                                />
+                            </div>
+                            <div className="col-3 text-right">
+                                <span className={'w-100'}>Will watch - {this.state.willWatchArr.length}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div className="row">
                     <div className="col-9">
                         <MovieList
@@ -66,7 +119,6 @@ class Movie extends Component {
                         />
                     </div>
                     <div className="col-3">
-                        <p>Will watch - {this.state.willWatchArr.length}</p>
                         <WillWatch
                             WillWatchList={this.state.willWatchArr}
                         />
