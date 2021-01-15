@@ -16,7 +16,6 @@ const MovieList = props => {
                     />
                 )
             })}
-
         </ul>
     )
 }
