@@ -41,7 +41,7 @@ class Movie extends Component {
                         isLoaded: true,
                         movies: result.results,
                         total_pages: result.total_pages,
-                        page_num: result.page
+                        page_num: result['page'],
                     });
                 },
                 (error) => {
@@ -98,20 +98,16 @@ class Movie extends Component {
     prevPageHandler = () => {
         if (this.state.page_num > 1) {
             this.setState({
-                page_num: this.state.page_num--
-            },
-                () => { this.getMovies() })
+                page_num: this.state.page_num -=1
+            },() => { this.getMovies() })
         }
     }
 
     nextPageHandler = () => {
-        if (this.state.page_num > this.state.total_pages) {
+        if (this.state.page_num < this.state.total_pages) {
             this.setState({
                 page_num: this.state.page_num +=1
-            },
-            () => {
-                this.getMovies()
-            })
+            }, () => { this.getMovies() })
         }
     }
 
